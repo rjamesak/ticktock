@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ticktock"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="TickTock Clock" Height="600" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -20,12 +21,22 @@
         <Canvas Width="200" Height="200" Grid.ColumnSpan="2">
             <Ellipse Width="160" Height="160" Stroke="Black" StrokeThickness="4" Canvas.Left="20" Canvas.Top="20"/>
             <Line x:Name="secondHand" 
-                  X1="100" Y1="100" X2="{Binding SecondHandX}" Y2="{Binding SecondHandY}" 
+                  X1="{Binding CenterX}" Y1="{Binding CenterY}" X2="{Binding SecondHandX}" Y2="{Binding SecondHandY}" 
                   Stroke="Red" StrokeThickness="2" StrokeEndLineCap="Square"/>
         </Canvas>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding ElapsedTimeText}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-        <Button Grid.Row="2" Grid.Column="0" Content="Start" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300"/>
-        <Button Grid.Row="2" Grid.Column="1" Content="Reset" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300"/>
-        <ProgressBar Grid.Row="3" Grid.ColumnSpan="2" Value="{Binding ProgressBar, Mode=OneWay}" Maximum="60" HorizontalAlignment="Center" VerticalAlignment="Center" Width="600"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding ElapsedTimeText}" FontSize="24" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+        <Button Grid.Row="2" Grid.Column="0" Content="{Binding StartStopButtonContent}" Command="{Binding StartStopCommand}" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" Width="300"/>
+        <Button Grid.Row="2" Grid.Column="1" Content="Reset" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                IsEnabled="{Binding IsResetButtonEnabled}"
+                Width="300" Command="{Binding ResetCommand}"/>
+        <ProgressBar Grid.Row="3" Grid.ColumnSpan="2" Value="{Binding ProgressBarValue, Mode=OneWay}" 
+                     Maximum="{Binding ProgressBarMaxValue}" 
+                     HorizontalAlignment="Center" VerticalAlignment="Center" Width="600" Height="12"/>
+        <Button Grid.Row="4" Content="Call WorldTime Api" HorizontalAlignment="Center" VerticalAlignment="Center"
+                Width="300" Command="{Binding GetCurrentTimeCommand}"></Button>
+        <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                 Width="300" Text="{Binding CurrentTime}"></TextBox>
     </Grid>
 </Window>
